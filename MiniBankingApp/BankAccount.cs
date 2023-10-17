@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace MiniBankingApp
 {
+
+	// This is an enumeration showing a definite, unchanging set of options for account type.
+	public enum AccountType
+	{
+        Savings = 1,
+        Current,
+		Fixed,
+        Domicilliary,
+		Unspecified
+    }
+
     internal class BankAccount
     {
 		// These are fields that hold pieces of data/state, and are accessible throughout the class but not outside.
