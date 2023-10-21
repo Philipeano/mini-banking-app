@@ -2,6 +2,17 @@
 
 Console.WriteLine();
 
+var dataTypesExplorer = new ExploringDataTypes();
+
+// Invoke the Demo() method to execute the code
+// dataTypesExplorer.Demo();
+
+// Invoke the ExploreTryCatch() method
+dataTypesExplorer.ExploreTryCatch();
+
+
+
+
 
 // Display a welcome message to the user
 // Setup a loop that keeps the program running until the user decides to quit/exit the system (HINT: Use a do...while loop)
@@ -19,6 +30,28 @@ Console.WriteLine();
 // Display the menu again after completing each task
 // Whenever the user chooses Exit, display a goodbye message and quit the program.
 
+
+// Uses a counter, and a terminating value
+for (int i = 0; i < 5; i++)
+{
+
+}
+
+
+// Uses an iterator within a collection
+var collection = new string[5];
+foreach (var item in collection)
+{
+
+}
+
+
+
+
+
+
+
+/*
 
 // Instantiate the BankAccount class to open an account
 var account = new BankAccount("Paul", "Konyefa", 10000, "Current");
@@ -56,4 +89,4 @@ else
     account.WithdrawFunds(withdrawalAmount);
 }
 
-
+*/
