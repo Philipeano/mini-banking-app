@@ -210,4 +210,14 @@ namespace MiniBankingApp
         // Add any additional props or methods specific to Samsung
     }
 
+    public class InfinixPhone : SmartPhone, ISmartPhone, IWirelessPhone, ITelephone
+    {
+        // Add any additional props or methods specific to Infinix
+    }
+
+    public class TecnoPhone : SmartPhone, ISmartPhone, IWirelessPhone, ITelephone
+    {
+        // Add any additional props or methods specific to Tecno
+    }
+
 }
