@@ -2,14 +2,17 @@
 
 Console.WriteLine();
 
-var dataTypesExplorer = new ExploringDataTypes();
+//var dataTypesExplorer = new ExploringDataTypes();
 
 // Invoke the Demo() method to execute the code
 // dataTypesExplorer.Demo();
 
 // Invoke the ExploreTryCatch() method
-dataTypesExplorer.ExploreTryCatch();
+//dataTypesExplorer.ExploreTryCatch();
 
+
+var serializationExplorer = new ExploringSerialization();
+serializationExplorer.Demo();
 
 
 
@@ -32,6 +35,7 @@ dataTypesExplorer.ExploreTryCatch();
 
 
 // Uses a counter, and a terminating value
+/*
 for (int i = 0; i < 5; i++)
 {
 
@@ -44,7 +48,7 @@ foreach (var item in collection)
 {
 
 }
-
+*/
 
 
 
