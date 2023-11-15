@@ -11,9 +11,12 @@ Console.WriteLine();
 //dataTypesExplorer.ExploreTryCatch();
 
 
-var serializationExplorer = new ExploringSerialization();
-serializationExplorer.Demo();
+// var serializationExplorer = new ExploringSerialization();
+// serializationExplorer.Demo();
 
+
+var linqExplorer = new ExploringLINQFundamentals();
+linqExplorer.Demo();
 
 
 
