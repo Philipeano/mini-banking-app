@@ -19,7 +19,6 @@ var linqExplorer = new ExploringLINQFundamentals();
 linqExplorer.Demo();
 
 
-
 // Display a welcome message to the user
 // Setup a loop that keeps the program running until the user decides to quit/exit the system (HINT: Use a do...while loop)
 // Present a menu to allow user choose a task or exit the system 

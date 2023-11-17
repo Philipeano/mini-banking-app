@@ -32,11 +32,35 @@ namespace MiniBankingApp
                 new NigerianState("Borno", "Maiduguri", GeopoliticalZone.NorthEast, 5751590, 27),
             };
 
-            /*
+            // Define another array to store LGAs
+            var LGAs = new StateLGA[]
+            {
+                new StateLGA("Ikeja", "Lagos", 15),
+                new StateLGA("Alimosho", "Lagos", 30),
+                new StateLGA("Oshodi-Isolo", "Lagos", 17),
+                new StateLGA("Agege", "Lagos", 23),
+                new StateLGA("Ifako-Ijaiye", "Lagos", 13),
+                new StateLGA("Yenagoa", "Bayelsa", 10),
+                new StateLGA("Brass", "Bayelsa", 8),
+                new StateLGA("Ekeremor", "Bayelsa", 11),
+                new StateLGA("Nembe", "Bayelsa", 12),
+                new StateLGA("Aboh-Mbaise", "Imo", 14),
+                new StateLGA("Orlu", "Imo", 16),
+                new StateLGA("Owerri", "Imo", 20),
+                new StateLGA("Mbaano", "Imo", 14),
+                new StateLGA("Abeokuta", "Ogun", 30),
+                new StateLGA("Sagamu", "Ogun", 20),
+                new StateLGA("Remo", "Ogun", 20),
+                new StateLGA("Ifo", "Ogun", 25),
+                new StateLGA("Offa", "Kwara", 10),
+                new StateLGA("Ilorin", "Kwara", 28),
+                new StateLGA("Dekina", "Kogi", 18),
+                new StateLGA("Lokoja", "Kogi", 23),
+                new StateLGA("Idah", "Kogi", 12),
+            };
+           
 
             // Problem 1 - Fetch all states arranged in ascending order of state name
-
-            // Second, define the query and store it in a variable
 
             // Query expression syntax
             IEnumerable<NigerianState> allStatesQuery = from state in states
@@ -45,8 +69,9 @@ namespace MiniBankingApp
             // Method-based syntax
             IEnumerable<NigerianState> allStatesQuery2 = states.OrderBy(s => s.StateName)
                                                                .Select(s => s);
-            // Third, iterate over the query variable to execute the query
+
             Console.WriteLine("QUERY RESULTS USING EXPRESSION SYNTAX\n");
+            Console.WriteLine();
 
             foreach (var state in allStatesQuery)
             {
@@ -66,9 +91,6 @@ namespace MiniBankingApp
 
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine();
-
-            */
 
             // Problem 2 - Fetch all states that have 20 or more LGAs, and arrange them in ascending order of NumberOfLGAs
             
@@ -77,8 +99,6 @@ namespace MiniBankingApp
                                                                       where state.NumberOfLGAs >= 20
                                                                       orderby state.NumberOfLGAs ascending, state.StateName ascending                                                                      
                                                                       select state;
-
-
             // Method-based syntax
             IEnumerable<NigerianState> allStatesWith20PlusLGAsQuery2 = states.Where(s => s.NumberOfLGAs >= 20)
                                                                              .OrderBy(s => s.NumberOfLGAs)
@@ -86,6 +106,7 @@ namespace MiniBankingApp
                                                                              .Select(s => s);
 
             Console.WriteLine("QUERY RESULTS USING EXPRESSION SYNTAX\n");
+            Console.WriteLine();
 
             foreach (var state in allStatesWith20PlusLGAsQuery)
             {
@@ -105,6 +126,126 @@ namespace MiniBankingApp
 
             Console.WriteLine();
             Console.WriteLine();
+
+            // Problem 3 - Fetch all states grouped on the basis of zone, sorted in descending order of NumberOfLGAs    
+
+            // Expression syntax
+            IEnumerable<IGrouping<GeopoliticalZone, NigerianState>> allStatesGroupedByZoneQuery = from state in states
+                                                                                                  orderby state.NumberOfLGAs descending
+                                                                                                  group state by state.Zone;
+            // Method-based syntax
+            IEnumerable<IGrouping<GeopoliticalZone, NigerianState>> allStatesGroupedByZoneQuery2 = states.OrderByDescending(s => s.NumberOfLGAs)
+                                                                                                         .GroupBy(s => s.Zone);
+
+            Console.WriteLine("QUERY RESULTS USING EXPRESSION SYNTAX\n");
+            Console.WriteLine();
+
+            foreach (var stateGroup in allStatesGroupedByZoneQuery)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine(stateGroup.Key.ToString().ToUpper());
+                Console.WriteLine("---------------------------------------------------------------------------");
+
+                foreach (var state in stateGroup)
+                {
+                    Console.WriteLine(state.StateName + "\t\t" + state.Capital + "\t\t\t" + state.NumberOfLGAs);
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("QUERY RESULTS USING METHOD-BASED SYNTAX\n");
+            Console.WriteLine();
+
+            foreach (var stateGroup in allStatesGroupedByZoneQuery2)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine(stateGroup.Key.ToString().ToUpper());
+                Console.WriteLine("---------------------------------------------------------------------------");
+
+                foreach (var state in stateGroup)
+                {
+                    Console.WriteLine(state.StateName + "\t\t" + state.Capital + "\t\t\t" + state.NumberOfLGAs);
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
+            // Problem 4 - Fetch all LGA names, along with their state and zone names, sorted by zone name, state name, then by LGA name
+
+            // Expression syntax
+            var allLGAsQuery = from LGA in LGAs
+                               join state in states on LGA.State equals state.StateName
+                               orderby state.Zone.ToString(), state.StateName, LGA.LgaName
+                               select new
+                               {
+                                   LgaName = LGA.LgaName,
+                                   StateName = state.StateName,
+                                   ZoneName = state.Zone.ToString()
+                               };
+
+            // Method-based syntax
+            var allLGAsQuery2 = LGAs.Join(states, lga => lga.State, state => state.StateName, (lga, state) => new
+                                        {
+                                            LgaName = lga.LgaName,
+                                            StateName = state.StateName,
+                                            ZoneName = state.Zone.ToString()
+                                        })
+                                    .OrderBy(x => x.ZoneName)
+                                    .ThenBy(x => x.StateName)
+                                    .ThenBy(x => x.LgaName);
+
+            Console.WriteLine("QUERY RESULTS USING EXPRESSION SYNTAX\n");
+            Console.WriteLine();
+
+            foreach (var lgaInfo in allLGAsQuery)
+            {
+                {
+                    Console.WriteLine(lgaInfo.ZoneName + "\t\t" + lgaInfo.StateName + "\t\t" + lgaInfo.LgaName);
+                    Console.WriteLine();
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("QUERY RESULTS USING METHOD-BASED SYNTAX\n");
+            Console.WriteLine();
+
+            foreach (var lgaInfo in allLGAsQuery2)
+            {
+                {
+                    Console.WriteLine(lgaInfo.ZoneName + "\t\t" + lgaInfo.StateName + "\t\t" + lgaInfo.LgaName);
+                    Console.WriteLine();
+                }
+            }
+          
+            // Problem 5 - Fetch LGAs in the SouthWest and SouthEast zones only 
+
+            var southWestAndSouthEastLGAsQuery =   from LGA in LGAs
+                                                   join state in states on LGA.State equals state.StateName
+                                                   where state.Zone == GeopoliticalZone.SouthWest || state.Zone == GeopoliticalZone.SouthEast
+                                                   orderby state.Zone.ToString(), state.StateName, LGA.LgaName
+                                                   select new
+                                                   {
+                                                       LgaName = LGA.LgaName,
+                                                       StateName = state.StateName,
+                                                       ZoneName = state.Zone.ToString()
+                                                   };
+
+            Console.WriteLine("QUERY RESULTS USING EXPRESSION SYNTAX\n");
+            Console.WriteLine();
+
+            foreach (var lgaInfo in southWestAndSouthEastLGAsQuery)
+            {
+                {
+                    Console.WriteLine(lgaInfo.ZoneName + "\t\t" + lgaInfo.StateName + "\t\t" + lgaInfo.LgaName);
+                    Console.WriteLine();
+                }
+            }
+            Console.WriteLine();
             Console.WriteLine();
         }
     }
@@ -117,9 +258,13 @@ namespace MiniBankingApp
         * Fetch all states arranged in ascending order of state name
         * Fetch all states that have 20 or more LGAs, and arrange them in ascending order of NumberOfLGAs
         * Fetch all states grouped on the basis of zone, sorted in desccending order of NumberOfLGAs    
+        * Fetch all LGA names, along with their state and zone names, sorted by zone name, state name, then by LGA name
+        * Fetch LGAs in the SouthWest and SouthEast zones only 
      */
 
     public record NigerianState (string StateName, string Capital, GeopoliticalZone Zone, int EstimatedPopulation, int NumberOfLGAs);
+
+    public record StateLGA(string LgaName, string State, int NumberOfTowns);
 
     public enum GeopoliticalZone
     {
@@ -130,7 +275,4 @@ namespace MiniBankingApp
         SouthSouth,
         SouthEast,
     }
-
-
-
 }
