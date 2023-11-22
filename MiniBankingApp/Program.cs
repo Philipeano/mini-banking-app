@@ -15,8 +15,11 @@ Console.WriteLine();
 // serializationExplorer.Demo();
 
 
-var linqExplorer = new ExploringLINQFundamentals();
-linqExplorer.Demo();
+//var linqExplorer = new ExploringLINQFundamentals();
+//linqExplorer.Demo();
+
+var asyncExplorer = new ExploringAsyncProgramming();
+await asyncExplorer.Demo();
 
 
 // Display a welcome message to the user
