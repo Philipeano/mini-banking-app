@@ -17,8 +17,8 @@ namespace MiniBankingApp
 		Unspecified
     }
 
-    internal class BankAccount
-    {
+	public class BankAccount : IBankAccount
+	{
 		// These are fields that hold pieces of data/state, and are accessible throughout the class but not outside.
 		private readonly string _firstName;
 		private readonly string _lastName;
@@ -27,7 +27,7 @@ namespace MiniBankingApp
 		private readonly int _accountNumber;
 
 		// These are constants. They hold pieces of data that do not change throughout the class.
-        private const int _accountNumberSeed = 1000000000;
+		private const int _accountNumberSeed = 1000000000;
 		private const string _bankName = "ALAO BANK";
 
 		// These are properties that make pieces of data/state available to external classes.
@@ -35,16 +35,17 @@ namespace MiniBankingApp
 		public int AccountNumber => _accountNumber;
 		public string AccountType => _accountType.ToUpper();
 		public string Bank => _bankName;
+		public double CurrentBalance => _balance;
 
 		// Define a method for opening account. We can use the constructor for this purpose
 		public BankAccount(string firstName, string LastName, double initialBalance, string accountType)
 		{
-			_firstName = firstName;	
-			_lastName = LastName;	
+			_firstName = firstName;
+			_lastName = LastName;
 			_balance = initialBalance;
 			_accountType = accountType;
 			_accountNumber = _accountNumberSeed + 1;
-        }
+		}
 
 		// Define a method for depositing funds
 		public void DepositFunds(double amount)
@@ -61,7 +62,7 @@ namespace MiniBankingApp
 
 			// Display the new balance
 			DisplayBalance();
-        }
+		}
 
 		// Define a method for withdrawing funds
 		public void WithdrawFunds(double amount)
@@ -69,24 +70,24 @@ namespace MiniBankingApp
 			// Validate the amount
 			if (amount > _balance)
 			{
-                Console.WriteLine("Insufficient funds! Kindly enter an amount not greater than your current balance.");
-                return;
-            }
+				Console.WriteLine("Insufficient funds! Kindly enter an amount not greater than your current balance.");
+				return;
+			}
 
 			// Deduct the withdrawn amount from the balance
 			_balance -= amount;
 
 			// Display the new balance
 			DisplayBalance();
-        }
+		}
 
-        // Define a method for displaying balance
+		// Define a method for displaying balance
 		public void DisplayBalance()
 		{
 			Console.WriteLine($"Your current balance is =N={_balance}");
 		}
 
-    }
+	}
 }
 
 
